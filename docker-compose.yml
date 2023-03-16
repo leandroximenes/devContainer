@@ -1,0 +1,36 @@
+version: '3'
+services:
+  apache:
+    build: .
+    volumes:
+      - ../:/var/www/html
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql
+    networks:
+      - my-network
+  
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: gintra
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: myrootpassword
+    ports:
+      - "3306:3306"
+    networks:
+      - my-network
+    volumes:
+      - 'mysql-volume:/var/lib/mysql'
+      - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
+
+networks:
+  my-network:
+
+volumes:
+  mysql-volume:
+    driver: local

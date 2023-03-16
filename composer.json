@@ -1,0 +1,29 @@
+{
+    "require": {
+        "php": "5.6.*",
+        "zendframework/zendframework": "^2.0",
+        "doctrine/doctrine-orm-module": "^1.0",
+        "zf-commons/zfc-user-doctrine-orm": "1.*",
+        "zf-commons/zfc-user": "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": "module/Application/src/",
+            "User\\": "module/User/src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.zendframework.com/"
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.org/"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/ZF-Commons/ZfcUserDoctrineORM.git"
+        }
+    ]
+}

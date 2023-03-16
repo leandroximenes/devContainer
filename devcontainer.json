@@ -1,0 +1,7 @@
+{
+    "name": "Gintra",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "apache",
+    "workspaceFolder": "/var/www/html/",
+    "remoteUser": "devContainer"
+}
