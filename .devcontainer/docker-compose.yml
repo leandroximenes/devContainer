@@ -1,8 +1,47 @@
-version: '3.8'
+version: '3.7'
 services:
-  devcontainer:
-    image: mcr.microsoft.com/devcontainers/base:ubuntu
-    container_name: aplication
+  app:
+    container_name: xdebug-php
+    build: 
+      context: ./php/
+      args:
+        HTTP_PROXY: ${HTTP_PROXY}
+        NO_PROXY: ${NO_PROXY}
+    restart: always
+    ports:
+      - '80:80'
+      - '9003:9003'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "painelsiafihmg.dec.eb.mil.br:10.67.28.119"
     volumes:
-      - ../..:/workspaces:cached
-    command: sleep infinity
+      - ../:/var/www/html
+      - ./php/log:/tmp/xdebug
+    depends_on:
+      - db   
+    networks:
+      - my-network
+  db:
+    image: postgres:10-alpine
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: doc
+      POSTGRES_PASSWORD: d0c3b
+      POSTGRES_DB: sioc-local
+      POSTGRES_INITDB_ARGS: "--locale=pt-BR"
+      LANG: pt_BR.utf8
+    volumes:
+      - 'postgres-volume:/var/lib/postgresql/data'
+      - './postgres/postgresql.conf:/etc/postgresql/postgresql.conf'
+    command: 'postgres -c config_file=/etc/postgresql/postgresql.conf'
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+    restart: unless-stopped
+
+networks:
+  my-network:
+volumes:
+    postgres-volume:
+        driver: local
