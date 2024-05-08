@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+BASHRC_FILE="$HOME/.bashrc"
+
+# if APPNAME is not set, use the current directory name
+if [ -z "$APPNAME" ]; then
+    APPNAME='BigNerve'
+fi
+
+echo '
+# Function to parse git branch
+parse_git_branch() {
+    status=$(git status --porcelain 2> /dev/null)
+    if [ -n "$status" ]; then
+        git branch 2> /dev/null | sed -n '\''/^\* /s/^\* \(.*\)/ (\1*)/p'\''
+    else
+        git branch 2> /dev/null | sed -n '\''/^\* /s/^\* \(.*\)/ (\1)/p'\'' 
+    fi
+}
+
+# Define PS1 with color codes and git branch
+export PS1='\''\[\033[1;32m\]\u@\[\033[0;35m\]'"$APPNAME"'\[\033[01;34m\]:\w\[\033[0;33m\]$(parse_git_branch)\[\033[01;34m\]\$\[\033[00m\] '\''
+' >> "$BASHRC_FILE"
+
+exec "$@"
