@@ -1,0 +1,57 @@
+#!/bin/bash
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+#create a local key
+printf "Criado nova chave de acesso \n"
+printf "Precione ENTER em todas as perguntas \n"
+ssh-keygen -t rsa -b 4096
+
+#copy to server
+ssh-copy-id -i ~/.ssh/id_rsa.pub doc@10.166.73.38
+
+git config core.filemode false > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    printf "${RED}ERROR:${NC}: git config core.filemode false \n"
+    exit 1
+fi
+
+cp config/define.php.save config/define.php > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+    printf "${RED}ERROR:${NC}: cp config/define.php.save config/define.php \n"
+    exit 1
+fi
+
+mkdir -p -m 777 log &&
+mkdir -p -m 777 sisdocv2/upload &&
+mkdir -p -m 777 sisdocv2/upload/contrato_objetivos &&
+mkdir -p -m 777 sisdocv2/upload/documentacao_obras &&
+mkdir -p -m 777 sisdocv2/upload/execucao_orcamentaria &&
+mkdir -p -m 777 sisdocv2/upload/financeiro &&
+mkdir -p -m 777 sisdocv2/upload/forca &&
+mkdir -p -m 777 sisdocv2/upload/fto &&
+mkdir -p -m 777 sisdocv2/upload/in05 &&
+mkdir -p -m 777 sisdocv2/upload/indicadores &&
+mkdir -p -m 777 sisdocv2/upload/macaco &&
+mkdir -p -m 777 sisdocv2/upload/obras &&
+mkdir -p -m 777 sisdocv2/upload/oog &&
+mkdir -p -m 777 sisdocv2/upload/producao &&
+mkdir -p -m 777 sisdocv2/upload/ptrab &&
+mkdir -p -m 777 sisdocv2/upload/ptrab_old &&
+mkdir -p -m 777 sisdocv2/upload/ptrab_resumido &&
+mkdir -p -m 777 sisdocv2/upload/supervisao &&
+mkdir -p -m 777 sisdocv2/upload/upload &&
+mkdir -p -m 777 sispec/upload &&
+mkdir -p -m 777 sispec/upload/pec &&
+mkdir -p -m 777 sispec/upload/rem
+
+if [ $? -ne 0 ]; then
+    printf "${RED}ERROR:${NC}: mkdir -p -m 777 ignored folders \n"
+    exit 1
+fi
+
+printf "\n${GREEN}SIOC instalado com sucesso!${NC}\n"
+echo ''
+echo '1) Abra o VSCODE e clique em "Reopen in Container"'
+echo '2) Restaure o banco em outro terminal remoto: "~/Code/sioc/.devcontainer/restore-db.sh"'

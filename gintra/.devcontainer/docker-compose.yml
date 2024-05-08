@@ -1,0 +1,45 @@
+version: '3'
+services:
+  app:
+    container_name: xdebug-php
+    build: 
+      context: ./php
+      args:
+        HTTP_PROXY: ${HTTP_PROXY}
+        NO_PROXY: ${NO_PROXY}
+    volumes:
+      - ../:/var/www/html
+    ports:
+      - "80:80"
+      - '9003:9003'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - mysql
+    networks:
+      - my-network
+  
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: gintra
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: myrootpassword
+    ports:
+      - "3306:3306"
+    networks:
+      - my-network
+    volumes:
+      - 'mysql-volume:/var/lib/mysql'
+      - ./db/backup.sql:/docker-entrypoint-initdb.d/backup.sql
+
+networks:
+  my-network:
+
+volumes:
+  mysql-volume:
+    driver: local

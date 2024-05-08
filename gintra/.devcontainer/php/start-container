@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Add custom Git branch name and status to ~/.bashrc
+echo 'parse_git_branch() {
+    branch=$(git symbolic-ref HEAD 2> /dev/null | cut -d "/" -f 3)
+    if [[ -n $branch ]]; then
+        status=$(git status --porcelain 2> /dev/null)
+        if [[ -n $status ]]; then
+            echo "($branch*)"
+        else
+            echo "($branch)"
+        fi
+    fi
+}
+
+export PS1='\''\[\e[32m\]\u@Intranet\[\e[m\]\[\e[31m\]➜\[\e[34m\]\w\[\e[33m\]$(parse_git_branch)\[\e[00m\] $(if [[ $? == 0 ]]; then echo "\[\e[32m\]\$ "; else echo "\[\e[31m\]\$ "; fi)\[\e[m\]'\'' ' >> /home/devContainer/.bashrc
