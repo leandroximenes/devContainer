@@ -1,11 +1,11 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
 {
-	"name": "Bignerve Js Services",
+	"name": "MY App",
 	"dockerComposeFile": [
-		"../docker-compose.yml"
+		"./docker-compose.yml"
 	],
-	"service": "api",
+	"service": "devcontainer",
 	"workspaceFolder": "/app/notification-service",
 	"initializeCommand": "bash -c '[[ $(docker ps -q) ]] && docker stop $(docker ps -aq) && docker rm $(docker ps -aq) || echo \"No conteiner running\"'",
 	// "features": {
