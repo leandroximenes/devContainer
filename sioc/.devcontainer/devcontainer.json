@@ -4,7 +4,7 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/var/www/html/",
-	"initializeCommand": "bash -c '[[ $(docker ps -aq) ]] && docker stop $(docker ps -aq) && docker rm $(docker ps -aq) || echo \"No conteiner running\"'",
+	"initializeCommand": "bash -c '[[ $(docker ps -aq) ]] && docker stop $(docker ps -aq) && docker rm $(docker ps -aq) || echo \"No container running\"'",
 	"containerEnv": {
 		"HTTP_PROXY": "${localEnv:HTTP_PROXY}",
 		"HTTPS_PROXY": "${localEnv:HTTP_PROXY}",

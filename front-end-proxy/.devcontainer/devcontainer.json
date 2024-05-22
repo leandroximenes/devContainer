@@ -7,7 +7,7 @@
 	],
 	"service": "api",
 	"workspaceFolder": "/app/notification-service",
-	"initializeCommand": "bash -c '[[ $(docker ps -aq) ]] && docker stop $(docker ps -aq) && docker rm $(docker ps -aq) || echo \"No conteiner running\"'",
+	"initializeCommand": "bash -c '[[ $(docker ps -aq) ]] && docker stop $(docker ps -aq) && docker rm $(docker ps -aq) || echo \"No container running\"'",
 	// "features": {
 	// 	"ghcr.io/devcontainers/features/common-utils:2": {},
 	// 	"ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {
@@ -16,7 +16,6 @@
 	// 	},
 	// 	"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {}
 	// },
-	"initializeCommand": "bash -c '[[ $(docker ps -aq) ]] && docker stop $(docker ps -aq) && docker rm $(docker ps -aq) || echo \"No conteiner running\"'",
 	"customizations": {
 		"vscode": {
 			"extensions": [
